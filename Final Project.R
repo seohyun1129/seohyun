@@ -11,46 +11,46 @@ remDr <- remoteDriver(
 remDr$open()
 remDr$navigate("https://kr.trip.com/flights/")
 
-#√‚πﬂ¡ˆ ¿‘∑¬
+#Ï∂úÎ∞úÏßÄ ÏûÖÎ†•
 departures <- remDr$findElement(using = "xpath",value='//*[@id="main"]/div/div[2]/form/div/div[1]/ul/li[1]/div[2]/input')
-departures$sendKeysToElement(list("¿Œ√µ"))
+departures$sendKeysToElement(list("Ïù∏Ï≤ú"))
 
-#µµ¬¯¡ˆ ¿‘∑¬
+#ÎèÑÏ∞©ÏßÄ ÏûÖÎ†•
 arrivals <- remDr$findElement(using = "xpath", value='//*[@id="main"]/div/div[2]/form/div/div[1]/ul/li[1]/div[4]/input')
-arrivals$sendKeysToElement(list("¥Ÿ≥∂"))
+arrivals$sendKeysToElement(list("Îã§ÎÇ≠"))
 
-#∞Àªˆ πˆ∆∞ ≈¨∏Ø
+#Í≤ÄÏÉâ Î≤ÑÌäº ÌÅ¥Î¶≠
 search <- remDr$findElement(using="xpath", value='//*[@id="main"]/div/div[2]/form/div/div[1]/div/div/div[2]')
 search$clickElement()
 
-#¿˙¿Â«“ ∆˙¥ı ª˝º∫
+#Ï†ÄÏû•Ìï† Ìè¥Îçî ÏÉùÏÑ±
 folder <- "c:/test"
 if(!dir.exists(folder)) dir.create(folder)
 setwd(folder)
 
-#¿•∆‰¿Ã¡ˆ ¡¢º” ≥Ø¬•, Ω√∞£
+#ÏõπÌéòÏù¥ÏßÄ Ï†ëÏÜç ÎÇ†Ïßú, ÏãúÍ∞Ñ
 date <- Sys.Date()
 h <- hour(Sys.time())
 m <- minute(Sys.time())
 
-#∆˙¥ıæ»ø° ¿ß¿« ≥Ø¬•øÕ Ω√∞£¿∏∑Œ ∆˙¥ı∏¶ ª˝º∫
+#Ìè¥ÎçîÏïàÏóê ÏúÑÏùò ÎÇ†ÏßúÏôÄ ÏãúÍ∞ÑÏúºÎ°ú Ìè¥ÎçîÎ•º ÏÉùÏÑ±
 now <- paste(date, h, m, sep="-")
 now.folder <- paste(folder, now, sep="/")
 if(!dir.exists(now.folder)) dir.create(now.folder)
 setwd(now.folder)
 
-#html¿ª πﬁæ∆ø»
+#htmlÏùÑ Î∞õÏïÑÏò¥
 source = remDr$getPageSource()[[1]]
 
-#¿•∆‰¿Ã¡ˆø°º≠ ¥ŸøÓπﬁ¿∫ ∆‰¿Ã¡ˆ ∆ƒ¿œ∑Œ ¿˙¿Â
+#ÏõπÌéòÏù¥ÏßÄÏóêÏÑú Îã§Ïö¥Î∞õÏùÄ ÌéòÏù¥ÏßÄ ÌååÏùºÎ°ú Ï†ÄÏû•
 filename = "ticket price.txt"
 writeLines(source, filename)
 html = read_html(filename, encoding="euc-kr")
 
-#¿¸√º µ•¿Ã≈Õ
+#Ï†ÑÏ≤¥ Îç∞Ïù¥ÌÑ∞
 span = html %>% html_nodes("span")
 
-#∞°∞› µ•¿Ã≈Õ √ﬂ√‚
+#Í∞ÄÍ≤© Îç∞Ïù¥ÌÑ∞ Ï∂îÏ∂ú
 em = span %>% html_nodes("em")
 n = gsub("(\r)(\n)(\t)","",em)
 n = strsplit(n,">")
@@ -63,7 +63,7 @@ for(i in 1:36){
   price[i] = p[[i]][1]
 }
 
-#µ•¿Ã≈Õ ∫–ºÆ
+#Îç∞Ïù¥ÌÑ∞ Î∂ÑÏÑù
 price = gsub(",","",price)
 price = as.numeric(price)
 summary(price)
@@ -71,6 +71,7 @@ hist(price)
 boxplot(price, main="boxplot of price")
 barplot(price, main="barplot of price")
 
+#Ï∂úÎ∞úÏãúÍ∞Å Îç∞Ïù¥ÌÑ∞ Ï∂îÏ∂ú
 class <- remDr$findElement(using = "class", value='time')
 class$getElementText()
 
